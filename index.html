@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#090b10" />
+  <title>EdgeLog — Trading Journal Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand">
+        <div class="brand-mark">E</div>
+        <div>
+          <div class="brand-name">EdgeLog</div>
+          <div class="brand-sub">Trading Journal</div>
+        </div>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-item active" data-section="dashboard"><span>⌂</span> Dashboard</button>
+        <button class="nav-item" data-section="trades"><span>↗</span> Trade Log</button>
+        <button class="nav-item" data-section="analytics"><span>◫</span> Analytics</button>
+        <button class="nav-item" data-section="journal"><span>✎</span> Journal</button>
+      </nav>
+
+      <div class="side-card">
+        <div class="side-card-label">Current portfolio</div>
+        <div class="side-card-row">
+          <div>
+            <strong>Challenge 01</strong>
+            <span>Demo account</span>
+          </div>
+          <button class="icon-btn">⌄</button>
+        </div>
+        <div class="balance-mini">$4,382.40</div>
+        <div class="mini-positive">+3.01% this month</div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="avatar">T</div>
+        <div class="user-copy"><strong>Trader</strong><span>Local demo</span></div>
+        <button class="icon-btn">⋯</button>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobileMenu">☰</button>
+        <div class="search-wrap">
+          <span>⌕</span>
+          <input id="globalSearch" placeholder="Search symbol, setup, tag…" />
+          <kbd>/</kbd>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-btn" id="themeToggle">☼</button>
+          <button class="primary-btn" id="newTradeBtn">＋ New Trade</button>
+        </div>
+      </header>
+
+      <section class="page active" id="dashboard">
+        <div class="page-head">
+          <div>
+            <div class="eyebrow">OVERVIEW</div>
+            <h1>Trading Dashboard</h1>
+            <p>ภาพรวมวินัย ความเสี่ยง และผลลัพธ์จากบันทึกการเทรดของคุณ</p>
+          </div>
+          <div class="range-pills" id="rangePills">
+            <button data-range="7">7D</button>
+            <button class="active" data-range="30">30D</button>
+            <button data-range="90">90D</button>
+            <button data-range="all">All</button>
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-card">
+            <div class="stat-top"><span>Balance</span><span class="badge neutral">DEMO</span></div>
+            <div class="stat-value" id="balanceValue">$4,382.40</div>
+            <div class="stat-foot positive">↗ +$127.50 <span>this month</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Net P&amp;L</span><span class="spark">⌁</span></div>
+            <div class="stat-value positive-text" id="pnlValue">+$382.40</div>
+            <div class="stat-foot"><span>8 wins / 5 losses</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Win Rate</span><span class="spark">◎</span></div>
+            <div class="stat-value" id="winRateValue">61.5%</div>
+            <div class="stat-foot"><span>13 closed trades</span></div>
+          </article>
+          <article class="stat-card">
+            <div class="stat-top"><span>Max Drawdown</span><span class="spark">↓</span></div>
+            <div class="stat-value negative-text" id="ddValue">-2.4%</div>
+            <div class="stat-foot"><span>Within 5% rule</span></div>
+          </article>
+        </div>
+
+        <div class="dashboard-grid">
+          <article class="panel equity-panel">
+            <div class="panel-head">
+              <div><span class="panel-kicker">PERFORMANCE</span><h2>Equity Curve</h2></div>
+              <div class="panel-actions"><button class="chip active">Balance</button><button class="chip">Cumulative P&amp;L</button></div>
+            </div>
+            <div class="equity-summary"><strong>$4,382.40</strong><span class="positive">+9.56%</span><span>from starting balance</span></div>
+            <div class="chart-wrap">
+              <svg id="equityChart" viewBox="0 0 900 280" preserveAspectRatio="none" aria-label="Equity curve chart"></svg>
+              <div class="chart-tooltip" id="chartTooltip"></div>
+            </div>
+          </article>
+
+          <article class="panel discipline-panel">
+            <div class="panel-head"><div><span class="panel-kicker">DISCIPLINE</span><h2>Rule Score</h2></div><span class="score-grade">A-</span></div>
+            <div class="score-ring" style="--score:84"><div><strong>84</strong><span>/100</span></div></div>
+            <div class="discipline-list">
+              <div><span>Risk ≤ 1%</span><strong class="positive-text">92%</strong></div>
+              <div><span>Waited for confirmation</span><strong>77%</strong></div>
+              <div><span>No revenge trade</span><strong class="positive-text">100%</strong></div>
+              <div><span>Followed session plan</span><strong>69%</strong></div>
+            </div>
+          </article>
+
+          <article class="panel calendar-panel">
+            <div class="panel-head">
+              <div><span class="panel-kicker">CONSISTENCY</span><h2>Performance Calendar</h2></div>
+              <div class="calendar-controls"><button class="icon-btn" id="prevMonth">‹</button><strong id="monthLabel"></strong><button class="icon-btn" id="nextMonth">›</button></div>
+            </div>
+            <div class="weekdays"><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span><span>Sun</span></div>
+            <div class="calendar-grid" id="calendarGrid"></div>
+          </article>
+
+          <article class="panel setup-panel">
+            <div class="panel-head"><div><span class="panel-kicker">EDGE</span><h2>Top Setups</h2></div><button class="text-btn">View all</button></div>
+            <div class="setup-list">
+              <div class="setup-row"><div><span class="setup-icon">F</span><p><strong>FVG + Liquidity Sweep</strong><small>5 trades</small></p></div><p><strong>80%</strong><small>Win rate</small></p></div>
+              <div class="setup-row"><div><span class="setup-icon">O</span><p><strong>OB Retest</strong><small>4 trades</small></p></div><p><strong>75%</strong><small>Win rate</small></p></div>
+              <div class="setup-row"><div><span class="setup-icon">C</span><p><strong>CHOCH Confirmation</strong><small>4 trades</small></p></div><p><strong>50%</strong><small>Win rate</small></p></div>
+            </div>
+          </article>
+        </div>
+
+        <article class="panel recent-panel">
+          <div class="panel-head"><div><span class="panel-kicker">LATEST</span><h2>Recent Trades</h2></div><button class="text-btn" data-jump="trades">View trade log →</button></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Setup</th><th>Risk</th><th>R</th><th>P&amp;L</th><th>Result</th></tr></thead>
+              <tbody id="recentTradesBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="page" id="trades">
+        <div class="page-head">
+          <div><div class="eyebrow">TRADE LOG</div><h1>All Trades</h1><p>บันทึกเหตุผลก่อนเข้าและทบทวนผลหลังปิดไม้</p></div>
+          <button class="primary-btn" id="newTradeBtn2">＋ Add trade</button>
+        </div>
+        <div class="toolbar panel-lite">
+          <div class="filter-input"><span>⌕</span><input id="tradeSearch" placeholder="Search symbol or setup" /></div>
+          <select id="resultFilter"><option value="all">All results</option><option value="Win">Wins</option><option value="Loss">Losses</option><option value="BE">Breakeven</option></select>
+          <select id="sideFilter"><option value="all">All sides</option><option value="Buy">Buy</option><option value="Sell">Sell</option></select>
+          <button class="ghost-btn" id="resetFilters">Reset</button>
+        </div>
+        <article class="panel">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>Exit</th><th>Risk</th><th>R</th><th>P&amp;L</th><th>Setup</th><th>Result</th></tr></thead>
+              <tbody id="allTradesBody"></tbody>
+            </table>
+          </div>
+        </article>
+      </section>
+
+      <section class="page" id="analytics">
+        <div class="page-head"><div><div class="eyebrow">ANALYTICS</div><h1>Performance Analytics</h1><p>หาจุดแข็ง จุดรั่ว และช่วงเวลาที่ระบบของคุณทำงานดีที่สุด</p></div></div>
+        <div class="analytics-grid">
+          <article class="panel"><div class="panel-head"><div><span class="panel-kicker">SESSION</span><h2>P&amp;L by Session</h2></div></div><div id="sessionBars" class="bar-chart"></div></article>
+          <article class="panel"><div class="panel-head"><div><span class="panel-kicker">DIRECTION</span><h2>Buy vs Sell</h2></div></div><div class="donut-row"><div class="donut"><div><strong>61.5%</strong><span>overall WR</span></div></div><div class="legend"><p><i class="dot buy-dot"></i>Buy <strong>66%</strong></p><p><i class="dot sell-dot"></i>Sell <strong>57%</strong></p><p><i class="dot be-dot"></i>Breakeven <strong>8%</strong></p></div></div></article>
+          <article class="panel leak-panel"><div class="panel-head"><div><span class="panel-kicker">LEAK DETECTOR</span><h2>Cost of Mistakes</h2></div></div><div class="leak-list"><div><span>Entered before confirmation</span><strong>-$96.50</strong></div><div><span>Oversized risk</span><strong>-$63.20</strong></div><div><span>Late session entry</span><strong>-$34.00</strong></div></div></article>
+          <article class="panel"><div class="panel-head"><div><span class="panel-kicker">R-MULTIPLE</span><h2>Distribution</h2></div></div><div class="r-bars"><span style="--h:28%"><i>-1R</i></span><span style="--h:38%"><i>-0.5R</i></span><span style="--h:17%"><i>0R</i></span><span style="--h:58%"><i>1R</i></span><span style="--h:82%"><i>2R</i></span><span style="--h:48%"><i>3R+</i></span></div></article>
+        </div>
+      </section>
+
+      <section class="page" id="journal">
+        <div class="page-head"><div><div class="eyebrow">JOURNAL</div><h1>Trading Notes</h1><p>เขียนแผนก่อนตลาดเปิด และสรุปสิ่งที่ทำได้ดีหรือควรแก้หลังจบวัน</p></div><button class="primary-btn" id="saveJournal">Save note</button></div>
+        <article class="panel journal-card">
+          <div class="journal-tabs"><button class="active">Pre-Market</button><button>Post-Market</button></div>
+          <label>Daily bias<input id="biasInput" placeholder="เช่น รอ Sell หลัง sweep BSL แล้วเกิด bearish CHOCH" /></label>
+          <label>Key levels<input id="levelsInput" placeholder="เช่น 2658–2662 / 2641" /></label>
+          <label>Rules today<textarea id="rulesInput" rows="4" placeholder="1) Risk ไม่เกิน 0.5%  2) ไม่ไล่ราคา  3) รอ LTF confirmation"></textarea></label>
+          <label>Notes<textarea id="notesInput" rows="8" placeholder="บันทึกสิ่งที่สังเกต ความรู้สึก และบทเรียนวันนี้"></textarea></label>
+          <div class="save-status" id="saveStatus">Stored locally on this device.</div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal" id="tradeModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close="modal"></div>
+    <div class="modal-card">
+      <div class="modal-head"><div><span class="panel-kicker">NEW TRADE</span><h2>Log a trade</h2></div><button class="icon-btn" data-close="modal">✕</button></div>
+      <form id="tradeForm">
+        <div class="form-grid">
+          <label>Date<input type="date" id="fDate" required></label>
+          <label>Symbol<input id="fSymbol" value="XAUUSD" required></label>
+          <label>Side<select id="fSide"><option>Buy</option><option>Sell</option></select></label>
+          <label>Setup<select id="fSetup"><option>FVG + Liquidity Sweep</option><option>OB Retest</option><option>CHOCH Confirmation</option><option>Breaker</option></select></label>
+          <label>Entry<input type="number" step="0.01" id="fEntry" required></label>
+          <label>Exit<input type="number" step="0.01" id="fExit" required></label>
+          <label>Risk %<input type="number" step="0.1" min="0" id="fRisk" value="0.5" required></label>
+          <label>R-Multiple<input type="number" step="0.1" id="fR" value="1" required></label>
+          <label>P&amp;L ($)<input type="number" step="0.01" id="fPnl" required></label>
+          <label>Result<select id="fResult"><option>Win</option><option>Loss</option><option>BE</option></select></label>
+        </div>
+        <label>Notes<textarea id="fNotes" rows="3" placeholder="เหตุผลเข้าไม้ / สิ่งที่เห็น / สิ่งที่ต้องแก้"></textarea></label>
+        <div class="modal-actions"><button type="button" class="ghost-btn" data-close="modal">Cancel</button><button class="primary-btn" type="submit">Save trade</button></div>
+      </form>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
